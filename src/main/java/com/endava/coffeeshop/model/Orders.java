@@ -10,10 +10,10 @@ public class Orders {
     @Column (name = "order_id")
     private Integer Order_id;
 
-
     @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @Column(name = "product_id")
     private String Product_id;
-
+    @Column(name = "amount")
     private Integer Amount;
 
     public Orders() {

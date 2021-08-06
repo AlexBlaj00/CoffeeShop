@@ -7,15 +7,20 @@ import java.util.Objects;
 @Entity
 public class Customer {
     @Id
+    @Column(name = "name")
     private String Name;
 
     //@OneToOne( cascade  = GenerationType.AUTO)
     @JoinColumn(name = "id_order", referencedColumnName = "order_id")
+    @Column(name = "id_order")
     private int Id_order;
-
+    @Column(name = "cash")
     private boolean Cash;
+    @Column(name = "delivery")
     private boolean Delivery;
+    @Column(name = "date")
     private Date Date;
+    @Column(name = "total")
     private float Total;
 
     public Customer() {

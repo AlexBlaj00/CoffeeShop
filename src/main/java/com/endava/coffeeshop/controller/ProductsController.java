@@ -12,7 +12,7 @@ import java.util.Optional;
 public class ProductsController {
 
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
     //private ProductModelAssembler modelAssembler;
     @Autowired
     public ProductsController(ProductRepository productRepository) { //ProductModelAssembler modelAssembler) {
@@ -22,7 +22,7 @@ public class ProductsController {
 
     @GetMapping("/index")
     public String cv() {
-        return "cacat";
+        return "smth";
     }
 
     @GetMapping("/products")
