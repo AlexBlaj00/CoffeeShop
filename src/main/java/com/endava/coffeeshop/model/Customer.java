@@ -10,10 +10,10 @@ public class Customer {
     @Column(name = "name")
     private String Name;
 
-    //@OneToOne( cascade  = GenerationType.AUTO)
+    //@OneToMany
     @JoinColumn(name = "id_order", referencedColumnName = "order_id")
     @Column(name = "id_order")
-    private int Id_order;
+    private Integer Id_order;
     @Column(name = "cash")
     private boolean Cash;
     @Column(name = "delivery")

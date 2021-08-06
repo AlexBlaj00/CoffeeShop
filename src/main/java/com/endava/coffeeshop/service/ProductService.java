@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService  {
@@ -21,8 +22,8 @@ public class ProductService  {
         return productRepository.save(products);
     }
 
-    public Object find(int id) {
-        return productRepository.findById(id);
+    public Products find(int id) {
+        return productRepository.findById(id).orElse(null);
     }
 
     public void deleteProduct(Integer id) {

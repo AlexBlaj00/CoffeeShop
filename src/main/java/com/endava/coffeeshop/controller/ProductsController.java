@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/v1/products")
+@RequestMapping("api/v1")
 public class ProductsController {
 
 
@@ -31,7 +31,7 @@ public class ProductsController {
         return "smth";
     }
 
-    @GetMapping("/products")
+    @GetMapping("/allProducts")
     public ResponseEntity<List<Products>> getProducts() {
         List<Products> products = null;
         products = productService.getAllProducts();
@@ -70,10 +70,10 @@ public class ProductsController {
         }
     }
 
-//    @GetMapping("/products/{id}")
-//    public Optional<Products> getProductById(@PathVariable Integer id) {
-//        return productRepository.findById(id);
-//    }
+    @GetMapping("/products/{id}")
+    public Products getProductById(@PathVariable Integer id) {
+        return productService.find(id);
+    }
 
    /* @GetMapping("products/{id}")
     public EntityModel<Products> one(@PathVariable Integer id) {
