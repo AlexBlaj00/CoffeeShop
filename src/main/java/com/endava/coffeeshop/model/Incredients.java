@@ -9,26 +9,28 @@ import java.util.Objects;
 public class Incredients {
     @Id
     @Column(name = "id")
-    private String Id;
+    private Integer Id;
     @Column(name = "name")
     private String Name;
     @Column(name = "price")
     private float Price;
-
+    @Column(name = "amount_stored")
+    private Integer amount_stored;
     public Incredients() {
     }
 
-    public Incredients(String id, String name, float price) {
-        Id = id;
-        Name = name;
-        Price = price;
+    public Incredients(Integer id, String name, float price, Integer amount_stored) {
+        this.Id = id;
+        this.Name = name;
+        this.Price = price;
+        this.amount_stored = amount_stored;
     }
 
-    public String getId() {
+    public Integer getId() {
         return Id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         Id = id;
     }
 
@@ -48,6 +50,14 @@ public class Incredients {
         Price = price;
     }
 
+    public Integer getAmount_stored() {
+        return amount_stored;
+    }
+
+    public void setAmount_stored(Integer amount_stored) {
+        this.amount_stored = amount_stored;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,7 +68,7 @@ public class Incredients {
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, Name, Price);
+        return Objects.hash(Id, Name, Price, amount_stored);
     }
 
     @Override
@@ -67,6 +77,7 @@ public class Incredients {
                 "Id='" + Id + '\'' +
                 ", Name='" + Name + '\'' +
                 ", Price=" + Price +
+                ", amount_stored=" + amount_stored +
                 '}';
     }
 }

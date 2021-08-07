@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "product")
-public class Products {
+@Table(name = "coffee")
+public class Coffee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -16,18 +16,16 @@ public class Products {
     private float Price;
     @Column(name = "amount_stored")
     private Integer Amount_stored;
-    @Column(name = "incredients")
-    private String Incredients;
 
-    public Products(Integer id, String name, float price, Integer amount_stored, String incredients) {
+
+    public Coffee(Integer id, String name, float price, Integer amount_stored) {
         Id = id;
         Name = name;
         Price = price;
         Amount_stored = amount_stored;
-        Incredients = incredients;
     }
 
-    public Products() {
+    public Coffee() {
 
     }
 
@@ -63,25 +61,18 @@ public class Products {
         Amount_stored = amount_stored;
     }
 
-    public String getIncredients() {
-        return Incredients;
-    }
-
-    public void setIncredients(String incredients) {
-        Incredients = incredients;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Products products = (Products) o;
-        return Float.compare(products.Price, Price) == 0 && Objects.equals(Id, products.Id) && Objects.equals(Name, products.Name) && Objects.equals(Amount_stored, products.Amount_stored) && Objects.equals(Incredients, products.Incredients);
+        Coffee coffee = (Coffee) o;
+        return Float.compare(coffee.Price, Price) == 0 && Objects.equals(Id, coffee.Id) && Objects.equals(Name, coffee.Name) && Objects.equals(Amount_stored, coffee.Amount_stored);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, Name, Price, Amount_stored, Incredients);
+        return Objects.hash(Id, Name, Price, Amount_stored);
     }
 
     @Override
@@ -91,7 +82,7 @@ public class Products {
                 ", Name='" + Name + '\'' +
                 ", Price=" + Price +
                 ", Amount_stored=" + Amount_stored +
-                ", Incredients='" + Incredients + '\'' +
+                '\'' +
                 '}';
     }
 }
