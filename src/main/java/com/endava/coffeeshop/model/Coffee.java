@@ -14,15 +14,16 @@ public class Coffee {
     private String Name;
     @Column(name = "price")
     private float Price;
-    @Column(name = "amount_stored")
-    private Integer Amount_stored;
+    @Column(name = "recipe_id")
+    @JoinColumn(name = "recipe_id")
+    private Integer recipe_id;
 
 
-    public Coffee(Integer id, String name, float price, Integer amount_stored) {
+    public Coffee(Integer id, String name, float price, Integer recipe_id) {
         Id = id;
         Name = name;
         Price = price;
-        Amount_stored = amount_stored;
+        this.recipe_id = recipe_id;
     }
 
     public Coffee() {
@@ -53,36 +54,34 @@ public class Coffee {
         Price = price;
     }
 
-    public Integer getAmount_stored() {
-        return Amount_stored;
+    public Integer getRecipe_id() {
+        return recipe_id;
     }
 
-    public void setAmount_stored(Integer amount_stored) {
-        Amount_stored = amount_stored;
+    public void setRecipe_id(Integer recipe_id) {
+        this.recipe_id = recipe_id;
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coffee coffee = (Coffee) o;
-        return Float.compare(coffee.Price, Price) == 0 && Objects.equals(Id, coffee.Id) && Objects.equals(Name, coffee.Name) && Objects.equals(Amount_stored, coffee.Amount_stored);
+        return Float.compare(coffee.Price, Price) == 0 && Objects.equals(Id, coffee.Id) && Objects.equals(Name, coffee.Name) && Objects.equals(recipe_id, coffee.recipe_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, Name, Price, Amount_stored);
+        return Objects.hash(Id, Name, Price, recipe_id);
     }
 
     @Override
     public String toString() {
-        return "Products{" +
-                "Id='" + Id + '\'' +
+        return "Coffee{" +
+                "Id=" + Id +
                 ", Name='" + Name + '\'' +
                 ", Price=" + Price +
-                ", Amount_stored=" + Amount_stored +
-                '\'' +
+                ", recipe_id=" + recipe_id +
                 '}';
     }
 }

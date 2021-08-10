@@ -1,9 +1,13 @@
 package com.endava.coffeeshop.controller;
 
+import com.endava.coffeeshop.ProductModelAssembler;
 import com.endava.coffeeshop.model.Coffee;
+import com.endava.coffeeshop.model.RecipeIngredients;
 import com.endava.coffeeshop.repository.CoffeeRepository;
 import com.endava.coffeeshop.service.CoffeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,20 +19,27 @@ import java.util.Optional;
 @RequestMapping("api/v1/coffee")
 public class CoffeeController {
 
-
     private final CoffeeRepository coffeeRepository;
     private CoffeeService coffeeService;
-    //private ProductModelAssembler modelAssembler;
+    private ProductModelAssembler modelAssembler;
     @Autowired
-    public CoffeeController(CoffeeRepository coffeeRepository, CoffeeService coffeeService) {
+    public CoffeeController(CoffeeRepository coffeeRepository, CoffeeService coffeeService, ProductModelAssembler modelAssembler) {
         this.coffeeRepository = coffeeRepository;
         this.coffeeService = coffeeService;
-        //this.modelAssembler = modelAssembler;
+        this.modelAssembler = modelAssembler;
     }
 
-    @GetMapping("/index")
-    public String cv() {
-        return "smth";
+//    @GetMapping("/index")
+//    public String cv() {
+//        return  coffeeService.getRecipes();
+//    }
+
+    @GetMapping("recipe")
+    public ResponseEntity<List<String>> recipe() {
+        List<String> cv = null;
+        cv = coffeeRepository.coffee();
+
+        return new ResponseEntity<List<String>>(cv, HttpStatus.OK);
     }
 
     @GetMapping("/allProducts")
@@ -61,7 +72,7 @@ public class CoffeeController {
             Coffee _product = product.get();
             _product.setName(coffee.getName());
             _product.setPrice(coffee.getPrice());
-            _product.setAmount_stored(coffee.getAmount_stored());
+            //_product.setAmount_stored(coffee.getAmount_stored());
             return new ResponseEntity<>(coffeeService.addNewProduct(_product), HttpStatus.OK);
         }
         else {
@@ -74,14 +85,15 @@ public class CoffeeController {
         return coffeeService.find(id);
     }
 
-   /* @GetMapping("products/{id}")
-    public EntityModel<Products> one(@PathVariable Integer id) {
-        return modelAssembler.toModel(productRepository.findById(id));
+    @GetMapping("coffees/{id}")
+    public EntityModel<Coffee> one(@PathVariable Integer id) {
+        Optional<Coffee> byId = coffeeRepository.findById(id);
+        return modelAssembler.toModel(byId.orElse(null));
     }
 
-    @GetMapping("/products")
-    public CollectionModel<EntityModel <Products>> all() {
-        return modelAssembler.toCollectionModel(productRepository.findAll());
-    }*/
+    @GetMapping("/coffe")
+    public CollectionModel<EntityModel <Coffee>> all() {
+        return modelAssembler.toCollectionModel(coffeeRepository.findAll());
+    }
 }
 

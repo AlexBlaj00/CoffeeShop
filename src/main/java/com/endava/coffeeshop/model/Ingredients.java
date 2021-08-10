@@ -1,12 +1,12 @@
 package com.endava.coffeeshop.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-public class Incredients {
+@Table(name = "ingredients")
+public class Ingredients {
     @Id
     @Column(name = "id")
     private Integer Id;
@@ -16,10 +16,22 @@ public class Incredients {
     private float Price;
     @Column(name = "amount_stored")
     private Integer amount_stored;
-    public Incredients() {
+
+//    @ManyToMany(mappedBy = "ingredientsSet")
+//    Set<Recipes> recipesSet;
+
+//    public Set<Recipes> getRecipesSet() {
+//        return recipesSet;
+//    }
+//
+//    public void setRecipesSet(Set<Recipes> recipesSet) {
+//        this.recipesSet = recipesSet;
+//    }
+
+    public Ingredients() {
     }
 
-    public Incredients(Integer id, String name, float price, Integer amount_stored) {
+    public Ingredients(Integer id, String name, float price, Integer amount_stored) {
         this.Id = id;
         this.Name = name;
         this.Price = price;
@@ -62,8 +74,8 @@ public class Incredients {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Incredients that = (Incredients) o;
-        return Float.compare(that.Price, Price) == 0 && Objects.equals(Id, that.Id) && Objects.equals(Name, that.Name);
+        Ingredients that = (Ingredients) o;
+        return Float.compare(that.Price, Price) == 0 && Objects.equals(Id, that.Id) && Objects.equals(Name, that.Name) && Objects.equals(amount_stored, that.amount_stored);
     }
 
     @Override
@@ -73,8 +85,8 @@ public class Incredients {
 
     @Override
     public String toString() {
-        return "Incredients{" +
-                "Id='" + Id + '\'' +
+        return "Ingredients{" +
+                "Id=" + Id +
                 ", Name='" + Name + '\'' +
                 ", Price=" + Price +
                 ", amount_stored=" + amount_stored +

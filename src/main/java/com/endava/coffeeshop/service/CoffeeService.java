@@ -33,5 +33,8 @@ public class CoffeeService {
         coffeeRepository.deleteById(id);
     }
 
+//    public String getRecipes() {
+//        return coffeeRepository.coffeeRecipe();
+//    }
 
 }
