@@ -5,94 +5,50 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
+@Table(name = "customer")
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_customer")
+    private Integer id_customer;
     @Column(name = "name")
-    private String Name;
+    private String name;
 
-    //@OneToMany
-    @JoinColumn(name = "id_order", referencedColumnName = "order_id")
-    @Column(name = "id_order")
-    private Integer Id_order;
-    @Column(name = "cash")
-    private boolean Cash;
-    @Column(name = "delivery")
-    private boolean Delivery;
-    @Column(name = "date")
-    private Date Date;
-    @Column(name = "total")
-    private float Total;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_address", referencedColumnName = "id_add")
+    private Addresses addresses;
+
+    public Customer(Integer id_customer, String name, Addresses addresses) {
+        this.id_customer = id_customer;
+        this.name = name;
+        this.addresses = addresses;
+    }
 
     public Customer() {
     }
 
-    public Customer(String name, Integer id_order, boolean cash, boolean delivery, java.util.Date date, float total) {
-        Name = name;
-        Id_order = id_order;
-        Cash = cash;
-        Delivery = delivery;
-        Date = date;
-        Total = total;
+    public Integer getId_customer() {
+        return id_customer;
+    }
+
+    public void setId_customer(Integer id_customer) {
+        this.id_customer = id_customer;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
-    public Integer getId_order() {
-        return Id_order;
+    public Addresses getAddresses() {
+        return addresses;
     }
 
-    public void setId_order(Integer id_order) {
-        Id_order = id_order;
-    }
-
-    public boolean isCash() {
-        return Cash;
-    }
-
-    public void setCash(boolean cash) {
-        Cash = cash;
-    }
-
-    public boolean isDelivery() {
-        return Delivery;
-    }
-
-    public void setDelivery(boolean delivery) {
-        Delivery = delivery;
-    }
-
-    public java.util.Date getDate() {
-        return Date;
-    }
-
-    public void setDate(java.util.Date date) {
-        Date = date;
-    }
-
-    public float getTotal() {
-        return Total;
-    }
-
-    public void setTotal(float total) {
-        Total = total;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "Name='" + Name + '\'' +
-                ", Id_order='" + Id_order + '\'' +
-                ", Cash=" + Cash +
-                ", Delivery=" + Delivery +
-                ", Date=" + Date +
-                ", Total=" + Total +
-                '}';
+    public void setAddresses(Addresses addresses) {
+        this.addresses = addresses;
     }
 
     @Override
@@ -100,11 +56,20 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return Cash == customer.Cash && Delivery == customer.Delivery && Float.compare(customer.Total, Total) == 0 && Objects.equals(Name, customer.Name) && Objects.equals(Id_order, customer.Id_order) && Objects.equals(Date, customer.Date);
+        return Objects.equals(id_customer, customer.id_customer) && Objects.equals(name, customer.name) && Objects.equals(addresses, customer.addresses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Name, Id_order, Cash, Delivery, Date, Total);
+        return Objects.hash(id_customer, name, addresses);
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id_customer=" + id_customer +
+                ", name='" + name + '\'' +
+                ", addresses=" + addresses +
+                '}';
     }
 }

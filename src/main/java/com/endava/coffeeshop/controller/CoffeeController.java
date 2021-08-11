@@ -2,6 +2,7 @@ package com.endava.coffeeshop.controller;
 
 import com.endava.coffeeshop.ProductModelAssembler;
 import com.endava.coffeeshop.model.Coffee;
+import com.endava.coffeeshop.model.Ingredients;
 import com.endava.coffeeshop.model.RecipeIngredients;
 import com.endava.coffeeshop.repository.CoffeeRepository;
 import com.endava.coffeeshop.service.CoffeeService;
@@ -34,11 +35,10 @@ public class CoffeeController {
 //        return  coffeeService.getRecipes();
 //    }
 
-    @GetMapping("recipe")
+    @GetMapping("customrecipe")
     public ResponseEntity<List<String>> recipe() {
         List<String> cv = null;
         cv = coffeeRepository.coffee();
-
         return new ResponseEntity<List<String>>(cv, HttpStatus.OK);
     }
 

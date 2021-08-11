@@ -19,7 +19,7 @@ public class Recipes {
 
 //    @ManyToMany
 //    @JoinTable(name = "recipeingredients", joinColumns = @JoinColumn(name = "re_id"), inverseJoinColumns = @JoinColumn(name = "ing_id"))
-//    Set<Ingredients> ingredientsSet;
+//    List<Ingredients> ingredientsSet;
 
     public Recipes(Integer id_recipe, String name ) {
         this.id_recipe = id_recipe;
@@ -29,11 +29,11 @@ public class Recipes {
     public Recipes() {
     }
 
-//    public Set<Ingredients> getIngredientsSet() {
+//    public List<Ingredients> getIngredientsSet() {
 //        return ingredientsSet;
 //    }
 //
-//    public void setIngredientsSet(Set<Ingredients> ingredientsSet) {
+//    public void setIngredientsSet(List<Ingredients> ingredientsSet) {
 //        this.ingredientsSet = ingredientsSet;
 //    }
 

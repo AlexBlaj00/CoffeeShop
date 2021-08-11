@@ -8,22 +8,42 @@ import java.util.Objects;
 public class Orders {
     @Id
     @Column (name = "order_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer Order_id;
 
-    //@OneToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    @Column(name = "product_id")
-    private String Product_id;
+    @Column(name = "coffee_id")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "coffee_id", referencedColumnName = "id")
+    private Integer coffee_id;
+
+    @Column(name = "customer_id")
+//    @OneToOne
+//    @JoinColumn(name = "customer_id", referencedColumnName = "id_customer")
+    private Integer customer_id;
+
+    @Column(name = "cash")
+    private Boolean cash;
+
+    @Column(name = "delivery")
+    private Boolean delivery;
+
     @Column(name = "amount")
     private Integer Amount;
+
+    @Column(name = "total")
+    private Integer total;
 
     public Orders() {
     }
 
-    public Orders(Integer order_id, String product_id, Integer amount) {
+    public Orders(Integer order_id, Coffee coffee, Integer customer, Boolean cash, Boolean delivery, Integer amount, Integer total) {
         Order_id = order_id;
-        Product_id = product_id;
+        this.coffee_id = coffee_id;
+        this.customer_id = customer_id;
+        this.cash = cash;
+        this.delivery = delivery;
         Amount = amount;
+        this.total = total;
     }
 
     public Integer getOrder_id() {
@@ -34,12 +54,36 @@ public class Orders {
         Order_id = order_id;
     }
 
-    public String getProduct_id() {
-        return Product_id;
+    public Integer getCoffee() {
+        return coffee_id;
     }
 
-    public void setProduct_id(String product_id) {
-        Product_id = product_id;
+    public void setCoffee(Integer coffee) {
+        this.coffee_id = coffee;
+    }
+
+    public Integer getCustomer() {
+        return customer_id;
+    }
+
+    public void setCustomer(Integer customer) {
+        this.customer_id = customer;
+    }
+
+    public Boolean getCash() {
+        return cash;
+    }
+
+    public void setCash(Boolean cash) {
+        this.cash = cash;
+    }
+
+    public Boolean getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Boolean delivery) {
+        this.delivery = delivery;
     }
 
     public Integer getAmount() {
@@ -50,13 +94,12 @@ public class Orders {
         Amount = amount;
     }
 
-    @Override
-    public String toString() {
-        return "Orders{" +
-                "Order_id='" + Order_id + '\'' +
-                ", Product_id='" + Product_id + '\'' +
-                ", Amount=" + Amount +
-                '}';
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 
     @Override
@@ -64,11 +107,24 @@ public class Orders {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Orders orders = (Orders) o;
-        return Objects.equals(Order_id, orders.Order_id) && Objects.equals(Product_id, orders.Product_id) && Objects.equals(Amount, orders.Amount);
+        return Objects.equals(Order_id, orders.Order_id) && Objects.equals(coffee_id, orders.coffee_id) && Objects.equals(customer_id, orders.customer_id) && Objects.equals(cash, orders.cash) && Objects.equals(delivery, orders.delivery) && Objects.equals(Amount, orders.Amount) && Objects.equals(total, orders.total);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Order_id, Product_id, Amount);
+        return Objects.hash(Order_id, coffee_id, customer_id, cash, delivery, Amount, total);
+    }
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "Order_id=" + Order_id +
+                ", coffee_id=" + coffee_id +
+                ", customer_id=" + customer_id +
+                ", cash=" + cash +
+                ", delivery=" + delivery +
+                ", Amount=" + Amount +
+                ", total=" + total +
+                '}';
     }
 }

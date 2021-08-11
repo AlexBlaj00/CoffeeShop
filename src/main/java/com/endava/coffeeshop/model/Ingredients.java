@@ -1,6 +1,7 @@
 package com.endava.coffeeshop.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,13 +19,13 @@ public class Ingredients {
     private Integer amount_stored;
 
 //    @ManyToMany(mappedBy = "ingredientsSet")
-//    Set<Recipes> recipesSet;
-
-//    public Set<Recipes> getRecipesSet() {
+//    List<Recipes> recipesSet;
+//
+//    public List<Recipes> getRecipesSet() {
 //        return recipesSet;
 //    }
 //
-//    public void setRecipesSet(Set<Recipes> recipesSet) {
+//    public void setRecipesSet(List<Recipes> recipesSet) {
 //        this.recipesSet = recipesSet;
 //    }
 
