@@ -1,9 +1,12 @@
 package com.endava.coffeeshop.controller;
 
+import com.endava.coffeeshop.assembler.AddressModelAssembler;
 import com.endava.coffeeshop.model.Addresses;
 import com.endava.coffeeshop.repository.AddressesRepository;
 import com.endava.coffeeshop.service.AddressesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +18,13 @@ import java.util.*;
 public class AddressesController {
     private final AddressesService addressesService;
     private final AddressesRepository addressesRepository;
+    private final AddressModelAssembler modelAssembler;
 
     @Autowired
-    public AddressesController(AddressesService addressesService, AddressesRepository addressesRepository) {
+    public AddressesController(AddressesService addressesService, AddressesRepository addressesRepository, AddressModelAssembler modelAssembler) {
         this.addressesService = addressesService;
         this.addressesRepository = addressesRepository;
+        this.modelAssembler = modelAssembler;
     }
 
     @GetMapping("/allAddresses")
@@ -57,5 +62,16 @@ public class AddressesController {
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Integer id) {
         addressesService.deleteAddresses(id);
+    }
+
+    @GetMapping("/address/{id}")
+    public EntityModel<Addresses> one(@PathVariable Integer id_add) {
+        Optional<Addresses> byId = addressesRepository.findById(id_add);
+        return modelAssembler.toModel(byId.orElse(null));
+    }
+
+    @GetMapping("/Addresses")
+    public CollectionModel<EntityModel<Addresses>> all() {
+        return modelAssembler.toCollectionModel(addressesRepository.findAll());
     }
 }

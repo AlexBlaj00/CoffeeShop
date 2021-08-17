@@ -2,10 +2,13 @@ package com.endava.coffeeshop.controller;
 
 
 
+import com.endava.coffeeshop.assembler.CustomerModelAssembler;
 import com.endava.coffeeshop.model.Customer;
 import com.endava.coffeeshop.repository.CustomerRepository;
 import com.endava.coffeeshop.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +21,13 @@ import java.util.Optional;
 public class CustomerController {
     private final CustomerRepository customerRepository;
     private final CustomerService customerService;
+    private final CustomerModelAssembler modelAssembler;
 
     @Autowired
-    public CustomerController(CustomerRepository customerRepository, CustomerService customerService) {
+    public CustomerController(CustomerRepository customerRepository, CustomerService customerService, CustomerModelAssembler modelAssembler) {
         this.customerRepository = customerRepository;
         this.customerService = customerService;
+        this.modelAssembler = modelAssembler;
     }
 
     @GetMapping("/allCustomers")
@@ -62,4 +67,15 @@ public class CustomerController {
         customerService.deleteCustomer(id);
     }
 
+
+    @GetMapping("/customer/{id}")
+    public EntityModel<Customer> one(@PathVariable Integer id_customer) {
+        Optional<Customer> byId = customerRepository.findById(id_customer);
+        return modelAssembler.toModel(byId.orElse(null));
+    }
+
+    @GetMapping("/Customers")
+    public CollectionModel<EntityModel<Customer>> all() {
+        return modelAssembler.toCollectionModel(customerRepository.findAll());
+    }
 }

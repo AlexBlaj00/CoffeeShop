@@ -1,19 +1,18 @@
 package com.endava.coffeeshop.controller;
 
-import com.endava.coffeeshop.model.Coffee;
-import com.endava.coffeeshop.model.Ingredients;
+import com.endava.coffeeshop.assembler.RecipeModelAssembler;
 import com.endava.coffeeshop.model.Recipes;
 import com.endava.coffeeshop.repository.RecipesRepository;
 import com.endava.coffeeshop.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -21,11 +20,13 @@ import java.util.Optional;
 public class RecipeController {
     private final RecipeService recipeService;
     private final RecipesRepository recipesRepository;
+    private final RecipeModelAssembler modelAssembler;
 
     @Autowired
-    public RecipeController(RecipeService recipeService, RecipesRepository recipesRepository) {
+    public RecipeController(RecipeService recipeService, RecipesRepository recipesRepository, RecipeModelAssembler modelAssembler) {
         this.recipeService = recipeService;
         this.recipesRepository = recipesRepository;
+        this.modelAssembler = modelAssembler;
     }
 
 //    @GetMapping("/allRecipes")
@@ -41,14 +42,14 @@ public class RecipeController {
 //        retete = recipeService.getAllRecipes(retete);
 //        return (ResponseEntity<?>) retete;
 //    }
-    @GetMapping("allRecipes")
+    @GetMapping("/allRecipes")
     public ResponseEntity<List<Recipes>> getProducts() {
         List<Recipes> recipes = null;
         recipes = recipeService.gettAll();
         return new ResponseEntity<List<Recipes>>(recipes, HttpStatus.OK);
     }
 
-    @PostMapping("addNewRecipes")
+    @PostMapping("/addNewRecipes")
     public ResponseEntity<Recipes> addRecipe(@RequestBody Recipes recipe) {
         Recipes recipes = null;
         try {
@@ -69,7 +70,7 @@ public class RecipeController {
         return recipeService.find(id);
     }
 
-    @PutMapping("update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Recipes> update (@PathVariable Integer id, @RequestBody Recipes recipes) {
         Optional<Recipes> recipe = recipesRepository.findById(id);
         if (recipe.isPresent()) {
@@ -82,4 +83,14 @@ public class RecipeController {
         }
     }
 
+    @GetMapping("/retele/{id}")
+    public EntityModel<Recipes> one(@PathVariable Integer id_recipe) {
+        Optional<Recipes> byId = recipesRepository.findById(id_recipe);
+        return modelAssembler.toModel(byId.orElse(null));
+    }
+
+    @GetMapping("/Recipes")
+    public CollectionModel<EntityModel <Recipes>> all() {
+        return modelAssembler.toCollectionModel(recipesRepository.findAll());
+    }
 }

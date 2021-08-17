@@ -1,4 +1,4 @@
-package com.endava.coffeeshop;
+package com.endava.coffeeshop.assembler;
 
 import com.endava.coffeeshop.controller.CoffeeController;
 import com.endava.coffeeshop.controller.IngredientsController;

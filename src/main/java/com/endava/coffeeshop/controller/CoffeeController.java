@@ -1,9 +1,7 @@
 package com.endava.coffeeshop.controller;
 
-import com.endava.coffeeshop.ProductModelAssembler;
+import com.endava.coffeeshop.assembler.CoffeeModelAssembler;
 import com.endava.coffeeshop.model.Coffee;
-import com.endava.coffeeshop.model.Ingredients;
-import com.endava.coffeeshop.model.RecipeIngredients;
 import com.endava.coffeeshop.repository.CoffeeRepository;
 import com.endava.coffeeshop.service.CoffeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +20,9 @@ public class CoffeeController {
 
     private final CoffeeRepository coffeeRepository;
     private CoffeeService coffeeService;
-    private ProductModelAssembler modelAssembler;
+    private CoffeeModelAssembler modelAssembler;
     @Autowired
-    public CoffeeController(CoffeeRepository coffeeRepository, CoffeeService coffeeService, ProductModelAssembler modelAssembler) {
+    public CoffeeController(CoffeeRepository coffeeRepository, CoffeeService coffeeService, CoffeeModelAssembler modelAssembler) {
         this.coffeeRepository = coffeeRepository;
         this.coffeeService = coffeeService;
         this.modelAssembler = modelAssembler;

@@ -1,9 +1,11 @@
 package com.endava.coffeeshop.controller;
 
-import com.endava.coffeeshop.model.Customer;
+import com.endava.coffeeshop.assembler.OrderModelAssembler;
 import com.endava.coffeeshop.model.Orders;
 import com.endava.coffeeshop.repository.OrdersRepository;
 import com.endava.coffeeshop.service.OrdersService;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +17,12 @@ import java.util.*;
 public class OrdersController {
     private final OrdersService ordersService;
     private final OrdersRepository ordersRepository;
+    private final OrderModelAssembler modelAssembler;
 
-    public OrdersController(OrdersService ordersService, OrdersRepository ordersRepository) {
+    public OrdersController(OrdersService ordersService, OrdersRepository ordersRepository, OrderModelAssembler modelAssembler) {
         this.ordersService = ordersService;
         this.ordersRepository = ordersRepository;
+        this.modelAssembler = modelAssembler;
     }
 
     @GetMapping("allOrders")
@@ -62,4 +66,13 @@ public class OrdersController {
         ordersService.deleteOrder(id);
     }
 
+    @GetMapping("/orders/{id}")
+    public EntityModel<Orders> one(@PathVariable Integer order_id) {
+        Optional<Orders> byId = ordersRepository.findById(order_id);
+        return modelAssembler.toModel(byId.orElse(null));
+    }
+
+    public CollectionModel<EntityModel<Orders>> all() {
+        return modelAssembler.toCollectionModel(ordersRepository.findAll());
+    }
 }

@@ -1,8 +1,7 @@
 package com.endava.coffeeshop.controller;
 
 
-import com.endava.coffeeshop.IngredientModelAssembler;
-import com.endava.coffeeshop.model.Coffee;
+import com.endava.coffeeshop.assembler.IngredientModelAssembler;
 import com.endava.coffeeshop.model.Ingredients;
 import com.endava.coffeeshop.repository.IngredientsRepository;
 import com.endava.coffeeshop.service.IngredientsService;
